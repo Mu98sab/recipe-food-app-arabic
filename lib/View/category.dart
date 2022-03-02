@@ -118,11 +118,7 @@ class Category extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Expanded(
-              child: snapshot.data?.length == 0
-                  ? const Center(
-                      child: Text("لا توجد وصفات لهذا التصنيف"),
-                    )
-                  : CustomScrollView(
+              child: CustomScrollView(
                       physics: BouncingScrollPhysics(),
                       slivers: <Widget>[
                         // TODO add sliverAppbar with the search
@@ -142,12 +138,7 @@ class Category extends StatelessWidget {
                             alignment: Alignment.center,
                             padding: const EdgeInsets.only(top: 10),
                           ),
-                          // stretch: true,
-                          stretch: true,
                           floating: true,
-                          onStretchTrigger: () async {
-                            print("hhhhhhhhhhhhhhhhhhhhhh");
-                          },
                         ),
                         SliverAppBar(
                           backgroundColor: theme.primaryColor,
@@ -161,9 +152,6 @@ class Category extends StatelessWidget {
                           // stretch: true,
                           stretch: true,
                           floating: true,
-                          onStretchTrigger: () async {
-                            print("hhhhhhhhhhhhhhhhhhhhhh");
-                          },
                         ),
 
                         SliverToBoxAdapter(
@@ -183,7 +171,7 @@ class Category extends StatelessWidget {
                           ),
                         ),
 
-                        SliverList(
+                        snapshot.data?.length != 0 ? SliverList(
                           delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int indx) {
                               return GestureDetector(
@@ -280,6 +268,11 @@ class Category extends StatelessWidget {
                             },
                             childCount: snapshot.data?.length ?? 0,
                           ),
+                        )
+                        :  SliverToBoxAdapter(
+                          child: const Center(
+                            child: Text("لا توجد وصفات لهذا التصنيف"),
+                          )
                         ),
                         // ),
                       ],
